@@ -3,7 +3,7 @@
 FROM node:latest
 
 #Creates a new directory 
-RUN mkdir -p /usr/src/app
+RUN mkdir -p /app
 
 #Sets the newly created directory as the working dir, run copy and cmd run on this dir
 WORKDIR /app
