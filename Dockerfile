@@ -6,16 +6,16 @@ FROM node:latest
 RUN mkdir -p /usr/src/app
 
 #Sets the newly created directory as the working dir, run copy and cmd run on this dir
-WORKDIR /usr/src/app
+WORKDIR /app
 
 #COPY the package.json file over to our working directory.
-COPY package.json /usr/src/app/
+COPY package.json /app
 
 #Runs npm install, to download and configure dependencies.
 RUN npm install
 
 #Lets us copy our entire local directory into our working directory to bundle our application source code.
-COPY . /usr/src/app
+COPY . /app
 
 # Exposes a port in which the container will listen on
 EXPOSE 5000

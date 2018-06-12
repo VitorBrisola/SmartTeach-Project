@@ -1,7 +1,7 @@
-version: "3"
+version: "2"
 services:
   mongo:
-    container_name: mongo_smart
+    container_name: mongo
     image: mongo
     volumes:
       - ./data/mongo:/data/db
@@ -12,7 +12,11 @@ services:
     container_name: app
     restart: on-failure
     build: .
+    volumes:
+     - .:/app
     ports:
       - "5000:5000"
-    links:
+    links: 
+      - mongo
+    depends_on: 
       - mongo

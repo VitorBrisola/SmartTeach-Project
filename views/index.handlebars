@@ -1,10 +1,34 @@
-<section class="jumbotron text-center">
+<div class="jumbotron text-center">
     <div class="container">
-        <h1 class="jumbotron-heading">Tela inicial do Vitor</h1>
-        <p class="lead text-muted">que é grande.</p>
+        <h1 class="jumbotron-heading">Tela inicialr</h1>
+        <p class="lead text-muted">falta fazer links.</p>
         <p>
-            <a href="/materiais" class="btn btn-primary my-2">Ir para materiais</a>
-            <a href="#" class="btn btn-secondary my-2">Aperte para lustrar</a>
+            <a href="#" class="btn btn-secondary my-2">adiconar as materias no DB</a>
         </p>
     </div>
-</section>
+</div>
+
+<div class="album py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            {{#each materias}}
+            <!-- for each loop in handlebars -->
+            <div class="col-md-4">
+                <div class="card mb-4 box-shadow">
+                    <img class="card-img-top filethumb" src="/img/folder_icon.png" alt="Card image cap">
+                    <div  class="card-body">
+                        <p class="card-text">{{name}}.</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <a class="btn btn-outline-primary" href="/materias/{{id}}" role="button">Link</a>
+                                <button type="button" class="btn btn-sm btn-outline-primary">Download</button>
+                            </div>
+                            <small class="text-muted">Há 9 mins</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{else}} {{/each}}
+        </div>
+    </div>
+</div>

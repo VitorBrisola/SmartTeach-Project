@@ -24,7 +24,10 @@ const db = require('./config/database');
 mongoose.Promise = global.Promise;
 /* Mongoose Middleware */
 /* Connect to mongoose */
-mongoose.connect('mongodb://localhost:27017/smartteach-dev')
+/* To work using docker use: mongodb://mongo:27017/smartteach-dev 
+   To work using local host use mongodb://localhost:27017/smartteach-dev
+*/
+mongoose.connect('mongodb://mongo:27017/smartteach-dev')
 	.then(() => console.log('Mongo DB Connected...'))
 	.catch(err => console.log(err));
 
@@ -70,6 +73,9 @@ app.use(function (req, res, next) {
 	res.locals.success_msg = req.flash('success_msg');
 	res.locals.error_msg = req.flash('error_msg');
 	res.locals.error = req.flash('error');
+	/* !!!! Gambiarra tenho que criar as materias no DB !!!!!!!*/
+	res.locals.materias = [{name: 'Calculo', id: 1, materias: [{text: 'Lista 3 Integrais'},{text: 'Resolução Lista 4 Integrais Triplas'}, {text: 'Prova 3 Calculo 3- Zani'}]} , 
+						   {name: 'Geometria Analitica', id:2, materias: [{text: 'Parametrização'}]}];
 	next();
 });
 
@@ -80,7 +86,8 @@ app.use(function (req, res, next) {
 app.get('/', (req, res) => {
 	const title = 'Welcome';
 	console.log(path.join(__dirname, 'public'));
-	res.render('index',);
+	/* !!!! Gambiarra tenho que criar as materias no DB !!!!!!!*/
+	res.render('index', res.materias);
 });
 
 /* process.env.PORT to deploy to heroku */
