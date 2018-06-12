@@ -10,10 +10,9 @@ const passport = require('passport');
 
 const app = express();
 
-/* Load Routes 
-const ideas = require('./routes/ideas');
-const users = require('./routes/users');
-*/
+/* Load Routes */
+const materiais = require('./routes/materiais');
+
 
 /* Passport Config 
 require('./config/passport')(passport);
@@ -25,7 +24,7 @@ const db = require('./config/database');
 mongoose.Promise = global.Promise;
 /* Mongoose Middleware */
 /* Connect to mongoose */
-mongoose.connect('mongodb://mongo:27017/smartteach-dev')
+mongoose.connect('mongodb://localhost:27017/smartteach-dev')
 	.then(() => console.log('Mongo DB Connected...'))
 	.catch(err => console.log(err));
 
@@ -81,10 +80,7 @@ app.use(function (req, res, next) {
 app.get('/', (req, res) => {
 	const title = 'Welcome';
 	console.log(path.join(__dirname, 'public'));
-	res.render('index', {
-		title: title,
-		materias: [{text: 'IDIOTA O VITOR'},{text: 'Calculo'}, {text: 'Geometria Analitica'}, {text: 'ICC'}]
-	});
+	res.render('index',);
 });
 
 /* process.env.PORT to deploy to heroku */
@@ -96,3 +92,6 @@ app.on('ready', function() {
 		console.log(`Server started on port ${port}`);
 	});	 
 }); 
+
+/* Use Routes */
+app.use('/materiais', materiais);

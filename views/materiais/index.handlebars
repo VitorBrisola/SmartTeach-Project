@@ -1,0 +1,34 @@
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading">Pasta de Calculo</h1>
+        <p class="lead text-muted">Encontre uma variedade de materiais relacionado a Calculo.</p>
+        <p>
+            <a href="#" class="btn btn-primary my-2">Compartilhar Material</a>
+        </p>
+    </div>
+</section>
+
+<div class="album py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            {{#each materias}}
+            <!-- for each loop in handlebars -->
+            <div class="col-md-4">
+                <div class="card mb-4 box-shadow">
+                    <img class="card-img-top filethumb" src="/img/filethumb.png" alt="Card image cap">
+                    <div class="card-body">
+                        <p class="card-text">{{text}}.</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                <button type="button" class="btn btn-sm btn-outline-primary">Download</button>
+                            </div>
+                            <small class="text-muted">Há 9 mins</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{else}} {{/each}}
+        </div>
+    </div>
+</div>
