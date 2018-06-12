@@ -3,11 +3,14 @@ SmartTeach is a web based plataform to help undergraduate students to find good 
 
 ## Usage and Installation
 1. Download and extract it.
-2. cd into SmartTeach folder
-3. docker-compose up
-    3.1 If theres errors about existing containers do
-        docker rm --force app 
-        docker rm --force mongo
+2. cd into SmartTeach folder.
+3. Running.
+        
+        docker-compose up
+          If theres errors about existing containers do
+                docker rm --force app 
+                docker rm --force mongo
+        
 4. Go to [http://localhost:5000/](http://localhost:5000/) 
 
 ## Tools Used
