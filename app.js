@@ -13,6 +13,11 @@ const app = express();
 /* Load Routes */
 const materiais = require('./routes/materiais');
 
+/* Load Routes 
+const ideas = require('./routes/ideas');
+const users = require('./routes/users');
+*/
+
 /* Passport Config 
 require('./config/passport')(passport);
  DB configuration 
@@ -85,13 +90,21 @@ app.use(function (req, res, next) {
 app.get('/', (req, res) => {
 	const title = 'Welcome';
 	console.log(path.join(__dirname, 'public'));
-	/* !!!! Gambiarra tenho que criar as materias no DB !!!!!!!*/
-	res.render('index', res.materias);
+	res.render('index', {
+		title: title,
+		materias: [{name: 'Calculo',image: '/img/calculoIcon.png',url:'/materiais/Calculo'}, 
+		{name: 'Geometria Analitica',image: '/img/estatisticaIcon.png',url:'/materiais/GeometriaAnalitica'},
+		{name: 'Computacao',image: '/img/computacaoIcon.png',url:'/materiais/Computacao'},
+		{name: 'Estatistica',image: '/img/estatisticaIcon.png',url:'/materiais/Estatistica'},
+		{name: 'Fisica',image: '/img/estatisticaIcon.png',url:'/materiais/Fisica'},
+		{name: 'Quimica',image: '/img/estatisticaIcon.png',url:'/materiais/Quimica'}]
+	});
 });
 
 /* process.env.PORT to deploy to heroku */
 const port = process.env.PORT || 5000;
 
+/* */
 app.on('ready', function() { 
     app.listen(port, () => {
 		/* back ticks work like format in python 3 */

@@ -1,5 +1,6 @@
 <div class="jumbotron text-center">
     <div class="container">
+<<<<<<< HEAD
         <h1 class="jumbotron-heading">Tela inicialr</h1>
         <p class="lead text-muted">falta fazer links.</p>
         <p>
@@ -26,8 +27,28 @@
                         </div>
                     </div>
                 </div>
+=======
+        <h1 class="jumbotron-heading">SmartTeach</h1>
+        <p class="lead text-muted">Ajundando voce a estudar melhor</p>
+        <p>
+            <!--<a href="#" class="btn btn-primary my-2">Aperte pra iluminar</a>
+            <a href="#" class="btn btn-secondary my-2">Aperte para lustrar</a>-->
+        </p>
+    </div>
+</section>
+
+<!-- Desenho do botoes de Materias na tela inicial -->
+<div class="container">
+    <div class="row">
+        {{#each materias}} <!-- for each loop in handlebars -->
+            <div class="col-md-4"> 
+                <a href={{url}}.> 
+                    <img class="img-thumbnail" src= {{image}} 
+                         alt="Card image cap" 
+                         style='height: 90%; width: 90%; object-fit: contain'>
+                </a>
+>>>>>>> master
             </div>
-            {{else}} {{/each}}
-        </div>
+        {{else}} {{/each}}
     </div>
 </div>

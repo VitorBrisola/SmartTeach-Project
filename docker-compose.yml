@@ -16,7 +16,7 @@ services:
      - .:/app
     ports:
       - "5000:5000"
-    links: 
+    links:
       - mongo
-    depends_on: 
+    depends_on:
       - mongo
