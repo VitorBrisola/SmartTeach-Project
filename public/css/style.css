@@ -1,6 +1,13 @@
+
 .logo{
     width: 130px;
     margin: auto;
+}
+
+.navIcon{
+  width: 40px;
+  margin: auto;
+  margin-right: 1em;
 }
 
 .filethumb{
@@ -47,3 +54,5 @@ footer p {
 }
 
 .box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
+
+

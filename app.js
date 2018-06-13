@@ -83,13 +83,19 @@ app.get('/', (req, res) => {
 	console.log(path.join(__dirname, 'public'));
 	res.render('index', {
 		title: title,
-		materias: [{text: 'IDIOTA O VITOR'},{text: 'Calculo'}, {text: 'Geometria Analitica'}, {text: 'ICC'}]
+		materias: [{name: 'Cálculo',image: '/img/calculoIcon.png',url:'http://www.google.com'}, 
+		{name: 'Geometria Analítica',image: '/img/estatisticaIcon.png',url:'https://www.youtube.com'},
+		{name: 'Computação',image: '/img/computacaoIcon.png',url:'https://www.facebook.com'},
+		{name: 'Estatística',image: '/img/estatisticaIcon.png',url:'http://www.google.com'},
+		{name: 'Física',image: '/img/estatisticaIcon.png',url:'http://www.google.com'},
+		{name: 'Química',image: '/img/estatisticaIcon.png',url:'http://www.google.com'}]
 	});
 });
 
 /* process.env.PORT to deploy to heroku */
 const port = process.env.PORT || 5000;
 
+/* */
 app.on('ready', function() { 
     app.listen(port, () => {
 		/* back ticks work like format in python 3 */
