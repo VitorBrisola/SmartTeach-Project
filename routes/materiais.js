@@ -6,22 +6,22 @@ const router = express.Router();
 //const { ensureAuthenticated } = require('../helpers/auth');
 
 /* Load Material Model */
-require('../models/Materiais');
+require('../models/Material');
 const Material = mongoose.model('materiais');
 
 /* Material index page */
-router.get('/',  (req, res) => {
+router.get('/:materia',  (req, res) => {
     res.render('materiais/index', {
-        materias: [{text: 'Lista 3 Integrais'},{text: 'Resolução Lista 4 Integrais Triplas'}, {text: 'Prova 3 Calculo 3- Zani'}]
+        materia: req.params.materia
     });
 });
 
-/* Add Material Form */
+/* Add Material Form 
 router.get('/add',  (req, res) => {
 	res.render('materiais/add');
 });
 
-/* Edit Idea Form
+ Edit Idea Form
 router.get('/edit/:id',  (req, res) => {
 	Idea.findOne({
 		_id: req.params.id

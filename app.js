@@ -13,7 +13,6 @@ const app = express();
 /* Load Routes */
 const materiais = require('./routes/materiais');
 
-
 /* Passport Config 
 require('./config/passport')(passport);
  DB configuration 
@@ -27,7 +26,7 @@ mongoose.Promise = global.Promise;
 /* To work using docker use: mongodb://mongo:27017/smartteach-dev 
    To work using local host use mongodb://localhost:27017/smartteach-dev
 */
-mongoose.connect('mongodb://mongo:27017/smartteach-dev')
+mongoose.connect('mongodb://127.0.0.1:27017/smartteach-dev')
 	.then(() => console.log('Mongo DB Connected...'))
 	.catch(err => console.log(err));
 

@@ -6,11 +6,11 @@ const Schema = mongoose.Schema;
 */
 /* Create Schema */
 const MaterialSchema = new Schema({
-    name:{
+    name: {
         type: String,
         required: true
     },
-    _type:{
+    materia: {
         type: String,
         required: true
     },
