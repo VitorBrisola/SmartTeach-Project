@@ -3,6 +3,12 @@
     margin: auto;
 }
 
+.navIcon{
+  width: 40px;
+  margin: auto;
+  margin-right: 1em;
+}
+
 .filethumb{
   width: 100px;
   margin: auto;
