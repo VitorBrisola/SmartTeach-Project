@@ -1,6 +1,6 @@
 <div class="card card-body">
     <h3>Adicionar Material</h3>
-    <form action="materiais/" method="post">
+    <form action="/materiais" method="post">
         <div class="form-group">
             <label for="name">Nome</label>
             <input type="text" name="name" class="form-control" required>
@@ -11,7 +11,7 @@
         </div>
         <div class="form-group">
             <label for="materia" >Materia</label>
-            <input type="text" name="materia" class="form-control" value="{{materia}}">
+            <input type="text" name="materia" class="form-control" value="{{nome}}">
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>

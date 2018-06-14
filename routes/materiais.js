@@ -10,48 +10,51 @@ require('../models/Material');
 const Material = mongoose.model('materiais');
 
 /* Add Material Form from a folder*/
-router.get('/add/:materia',  (req, res) => {
-    res.render('materiais/add', {
-        categoria: req.params.materia
-    })
+router.get('/add/:nome',  (req, res) => {
+	//console.log(req.materias);
+	res.render('materiais/add', {
+        nome: req.params.nome
+	});	
 });
 
 /* Process Form and Validation */
 router.post('/', (req, res) => {
+	console.log('SUMBIT')
 	let errors = [];
 
 	/* Checking for missing fields */
 	if (!req.body.name) {
-		errors.push({ text: 'Please add a name' });
+		errors.push({ text: 'Adicione um nome' });
 	}
 	
 	if (!req.body.desc) {
-		errors.push({ text: 'Please add a desc' });
+		errors.push({ text: 'Adicione uma descrição' });
 	}
 
 	if (!req.body.materia) {
-		errors.push({ text: 'Please add a desc' });
+		errors.push({ text: 'Vincule uma matéria ao material' });
 	}
 
 	/* If any errors respond with errors to user */
 	if (errors.length > 0) {
-		res.render('ideas/add', {
+		res.render('materiais/add', {
 			errors: errors,
-			title: req.body.title,
-			details: req.body.details
+			name: req.body.name,
+			desc: req.body.desc,
+			materia: req.body.materia
 		});
 	} else {
-		const newIdea = {
-			title: req.body.title,
-			details: req.body.details,
-			user: req.user.id
+		const newMaterial = {
+			name: req.body.name,
+			desc: req.body.desc,
+			materia: req.body.materia
 		};
 
-		new Idea(newIdea)
+		new Material(newMaterial)
 			.save()
 			.then(idea => {
-				req.flash('success_msg', 'Video idea added');
-				res.redirect('/');
+				req.flash('success_msg', 'Material adicionado a pasta de ' + newMaterial.materia);
+				res.redirect('/materias/' + newMaterial.materia);
 			});
 	}
 
