@@ -29,15 +29,15 @@ mongoose.Promise = global.Promise;
 /* Mongoose Middleware */
 /* Connect to mongoose */
 /* To work using docker use: mongodb://mongo:27017/smartteach-dev 
-   To work using local host use mongodb://localhost:27017/smartteach-dev*/
-
-mongoose.connect('mongodb://mongo:27017/smartteach-dev')
+   To work using local host use mongodb://localhost:27017/smartteach-dev
+*/
+mongoose.connect('mongodb://127.0.0.1:27017/smartteach-dev')
 	.then(() => console.log('Mongo DB Connected...'))
 	.catch(err => console.log(err));
 
-mongoose.connection.once('open', function() { 
-		// All OK - fire (emit) a ready event. 
-		app.emit('ready'); 
+mongoose.connection.once('open', function () {
+	// All OK - fire (emit) a ready event. 
+	app.emit('ready');
 });
 
 /* Handlebars Middleware*/
@@ -77,6 +77,12 @@ app.use(function (req, res, next) {
 	res.locals.success_msg = req.flash('success_msg');
 	res.locals.error_msg = req.flash('error_msg');
 	res.locals.error = req.flash('error');
+	res.locals.materias = [{ name: 'Calculo', image: '/img/calculoIcon.png', url: '/materiais/Calculo' },
+	{ name: 'Geometria Analitica', image: '/img/estatisticaIcon.png', url: '/materiais/GeometriaAnalitica' },
+	{ name: 'Computacao', image: '/img/computacaoIcon.png', url: '/materiais/Computacao' },
+	{ name: 'Estatistica', image: '/img/estatisticaIcon.png', url: '/materiais/Estatistica' },
+	{ name: 'Fisica', image: '/img/estatisticaIcon.png', url: '/materiais/Fisica' },
+	{ name: 'Quimica', image: '/img/estatisticaIcon.png', url: '/materiais/Quimica' }]
 	next();
 });
 
@@ -86,15 +92,9 @@ app.use(function (req, res, next) {
 */
 app.get('/', (req, res) => {
 	const title = 'Welcome';
-	console.log(path.join(__dirname, 'public'));
 	res.render('index', {
 		title: title,
-		materias: [{name: 'Calculo',image: '/img/calculoIcon.png',url:'/materiais/Calculo'}, 
-		{name: 'Geometria Analitica',image: '/img/estatisticaIcon.png',url:'/materiais/GeometriaAnalitica'},
-		{name: 'Computacao',image: '/img/computacaoIcon.png',url:'/materiais/Computacao'},
-		{name: 'Estatistica',image: '/img/estatisticaIcon.png',url:'/materiais/Estatistica'},
-		{name: 'Fisica',image: '/img/estatisticaIcon.png',url:'/materiais/Fisica'},
-		{name: 'Quimica',image: '/img/estatisticaIcon.png',url:'/materiais/Quimica'}]
+		materia: res.locals.materias
 	});
 });
 
@@ -102,12 +102,12 @@ app.get('/', (req, res) => {
 const port = process.env.PORT || 5000;
 
 /* */
-app.on('ready', function() { 
-    app.listen(port, () => {
+app.on('ready', function () {
+	app.listen(port, () => {
 		/* back ticks work like format in python 3 */
 		console.log(`Server started on port ${port}`);
-	});	 
-}); 
+	});
+});
 
 /* Use Routes */
 app.use('/materiais', materiais);
