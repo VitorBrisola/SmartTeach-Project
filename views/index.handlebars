@@ -1,33 +1,5 @@
 <div class="jumbotron text-center">
     <div class="container">
-<<<<<<< HEAD
-        <h1 class="jumbotron-heading">Tela inicialr</h1>
-        <p class="lead text-muted">falta fazer links.</p>
-        <p>
-            <a href="#" class="btn btn-secondary my-2">adiconar as materias no DB</a>
-        </p>
-    </div>
-</div>
-<div class="album py-5 bg-light">
-    <div class="container">
-        <div class="row">
-            {{#each materias}}
-            <!-- for each loop in handlebars -->
-            <div class="col-md-4">
-                <div class="card mb-4 box-shadow">
-                    <img class="card-img-top filethumb" src="/img/folder_icon.png" alt="Card image cap">
-                    <div  class="card-body">
-                        <p class="card-text">{{name}}.</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div class="btn-group">
-                                <a class="btn btn-outline-primary" href="/materiais/{{id}}" role="button">Link</a>
-                                <button type="button" class="btn btn-sm btn-outline-primary">Download</button>
-                            </div>
-                            <small class="text-muted">Há 9 mins</small>
-                        </div>
-                    </div>
-                </div>
-=======
         <h1 class="jumbotron-heading">SmartTeach</h1>
         <p class="lead text-muted">Ajundando voce a estudar melhor</p>
         <p>
@@ -42,12 +14,12 @@
     <div class="row">
         {{#each materias}} <!-- for each loop in handlebars -->
             <div class="col-md-4"> 
-                <a href={{url}}.> 
+                <a href={{url}}> 
+                    <!-- Poe nos style.css o style pra modularizar e identar -->
                     <img class="img-thumbnail" src= {{image}} 
                          alt="Card image cap" 
                          style='height: 90%; width: 90%; object-fit: contain'>
                 </a>
->>>>>>> master
             </div>
         {{else}} {{/each}}
     </div>

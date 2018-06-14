@@ -9,10 +9,18 @@ const router = express.Router();
 require('../models/Material');
 const Material = mongoose.model('materiais');
 
+/* Material index page */
+router.get('/:nome',  (req, res) => {
+	console.log(req.materias)
+	res.render('materias/index', {
+        materia: req.params.materia
+    });
+});
+
 /* Add Material Form from a folder*/
-router.get('/add/:materia',  (req, res) => {
-    res.render('materiais/add', {
-        categoria: req.params.materia
+router.get('/:nome/add',  (req, res) => {
+    res.redirect('/materiais/add', {
+        categoria: req.params.nome
     })
 });
 
