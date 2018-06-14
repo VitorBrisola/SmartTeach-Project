@@ -1,0 +1,29 @@
+<section class="jumbotron text-center">
+    <div class="container">
+        <h1 class="jumbotron-heading">Pasta: {{materia}}.</h1>
+        <p class="lead text-muted">Encontre uma variedade de materiais relacionado a {{materia}}.</p>
+        <p>
+            <a href="{{materia}}/add" class="btn btn-primary my-2">Adicionar Material</a>
+        </p>
+    </div>
+</section>
+
+<div class="album py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            {{#each materiais}}
+            <div class="col-md-4">
+                <!-- for each loop in handlebars -->
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top filethumb" src="/img/filethumb.png" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">{{name}}</h5>
+                        <p class="card-text">{{desc}}</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            </div>
+            {{else}} {{/each}}
+        </div>
+    </div>
+</div>

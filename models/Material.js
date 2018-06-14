@@ -10,6 +10,10 @@ const MaterialSchema = new Schema({
         type: String,
         required: true
     },
+    desc: {
+        type: String,
+        required: true
+    },
     materia: {
         type: String,
         required: true

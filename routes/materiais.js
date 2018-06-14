@@ -9,19 +9,76 @@ const router = express.Router();
 require('../models/Material');
 const Material = mongoose.model('materiais');
 
-/* Material index page */
-router.get('/:materia',  (req, res) => {
-    res.render('materiais/index', {
-        materia: req.params.materia
-    });
+/* Add Material Form from a folder*/
+router.get('/add/:nome',  (req, res) => {
+	//console.log(req.materias);
+	res.render('materiais/add', {
+        nome: req.params.nome
+	});	
 });
 
-/* Add Material Form 
-router.get('/add',  (req, res) => {
-	res.render('materiais/add');
+/* Process Form and Validation */
+router.post('/', (req, res) => {
+	console.log('SUMBIT')
+	let errors = [];
+
+	/* Checking for missing fields */
+	if (!req.body.name) {
+		errors.push({ text: 'Adicione um nome' });
+	}
+	
+	if (!req.body.desc) {
+		errors.push({ text: 'Adicione uma descrição' });
+	}
+
+	if (!req.body.materia) {
+		errors.push({ text: 'Vincule uma matéria ao material' });
+	}
+
+	/* If any errors respond with errors to user */
+	if (errors.length > 0) {
+		res.render('materiais/add', {
+			errors: errors,
+			name: req.body.name,
+			desc: req.body.desc,
+			materia: req.body.materia
+		});
+	} else {
+		const newMaterial = {
+			name: req.body.name,
+			desc: req.body.desc,
+			materia: req.body.materia
+		};
+
+		new Material(newMaterial)
+			.save()
+			.then(idea => {
+				req.flash('success_msg', 'Material adicionado a pasta de ' + newMaterial.materia);
+				res.redirect('/materias/' + newMaterial.materia);
+			});
+	}
+
 });
 
- Edit Idea Form
+/* Edit Form Process 
+router.put('/:id', (req, res) => {
+	Idea.findOne({
+		_id: req.params.id
+	})
+		.then(idea => {
+			// new values
+			idea.title = req.body.title;
+			idea.details = req.body.details;
+
+			idea.save()
+				.then(idea => {
+					req.flash('success_msg', 'Video idea updated');
+					res.redirect('/');
+				})
+		});
+});
+
+/* Edit Idea Form
 router.get('/edit/:id',  (req, res) => {
 	Idea.findOne({
 		_id: req.params.id

@@ -11,6 +11,7 @@ const passport = require('passport');
 const app = express();
 
 /* Load Routes */
+const materias = require('./routes/materias');
 const materiais = require('./routes/materiais');
 
 /* Load Routes 
@@ -31,7 +32,7 @@ mongoose.Promise = global.Promise;
 /* To work using docker use: mongodb://mongo:27017/smartteach-dev 
    To work using local host use mongodb://localhost:27017/smartteach-dev
 */
-mongoose.connect('mongodb://127.0.0.1:27017/smartteach-dev')
+mongoose.connect('mongodb://mongo:27017/smartteach-dev')
 	.then(() => console.log('Mongo DB Connected...'))
 	.catch(err => console.log(err));
 
@@ -77,12 +78,12 @@ app.use(function (req, res, next) {
 	res.locals.success_msg = req.flash('success_msg');
 	res.locals.error_msg = req.flash('error_msg');
 	res.locals.error = req.flash('error');
-	res.locals.materias = [{ name: 'Calculo', image: '/img/calculoIcon.png', url: '/materiais/Calculo' },
-	{ name: 'Geometria Analitica', image: '/img/estatisticaIcon.png', url: '/materiais/GeometriaAnalitica' },
-	{ name: 'Computacao', image: '/img/computacaoIcon.png', url: '/materiais/Computacao' },
-	{ name: 'Estatistica', image: '/img/estatisticaIcon.png', url: '/materiais/Estatistica' },
-	{ name: 'Fisica', image: '/img/estatisticaIcon.png', url: '/materiais/Fisica' },
-	{ name: 'Quimica', image: '/img/estatisticaIcon.png', url: '/materiais/Quimica' }]
+	res.locals.materias = req.materias = [{ name: 'Calculo', image: '/img/calculoIcon.png', url: '/materias/Calculo' },
+	{ name: 'Geometria Analitica', image: '/img/estatisticaIcon.png', url: '/materias/GeometriaAnalitica' },
+	{ name: 'Computação', image: '/img/computacaoIcon.png', url: '/materias/Computacao' },
+	{ name: 'Estatística', image: '/img/estatisticaIcon.png', url: '/materias/Estatistica' },
+	{ name: 'Física', image: '/img/estatisticaIcon.png', url: '/materias/Fisica' },
+	{ name: 'Química', image: '/img/estatisticaIcon.png', url: '/materias/Quimica' }]
 	next();
 });
 
@@ -110,4 +111,5 @@ app.on('ready', function () {
 });
 
 /* Use Routes */
+app.use('/materias', materias);
 app.use('/materiais', materiais);
