@@ -44,12 +44,13 @@ router.post('/', (req, res) => {
 			materia: req.body.materia
 		});
 	} else {
+		/* Creating a new material */
 		const newMaterial = {
 			name: req.body.name,
 			desc: req.body.desc,
 			materia: req.body.materia
 		};
-
+		/* Saving it to the mongo database */
 		new Material(newMaterial)
 			.save()
 			.then(idea => {
