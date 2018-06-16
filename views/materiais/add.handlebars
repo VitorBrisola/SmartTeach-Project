@@ -2,17 +2,60 @@
     <h3>Adicionar Material</h3>
     <form action="/materiais" method="post">
         <div class="form-group">
-            <label for="name">Nome</label>
-            <input type="text" name="name" class="form-control" required>
+            <input type="text" name="name" class="form-control" placeholder="Nome" required>
         </div>
         <div class="form-group">
-            <label for="desc">Descrição</label>
-            <textarea name="desc" class="form-control" required></textarea>
+            <textarea name="desc" class="form-control" placeholder="Descrição" required></textarea>
         </div>
-        <div class="form-group">
-            <label for="materia" >Materia</label>
-            <input type="text" name="materia" class="form-control" value="{{nome}}">
+        <div class="class form-group ">
+            <select name="materia" class="form-control" required>
+                <option value="" selected disabled hidden>Escolher a Matéria</option>
+                {{#each materias}}
+                <!-- for each loop in handlebars -->
+                <option value="{{name}}">{{name}}</option>
+                {{else}} {{/each}}
+            </select>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <div class="class form-group">
+            <select id="tipos" name="tipo" class="form-control" onchange="contextChange()" required>
+                <option value="" selected disabled hidden>Tipo do Material</option>
+                <option value="arquivo">Arquivo</option>
+                <option value="link">Link</option>
+            </select>
+        </div>
+        <div id="link" class="showing form-group">
+            <input type="link" name="link" class="form-control" placeholder="Link">
+        </div>
+        <div id="file-input" class="showing form-group custom-file mb-3">
+            <input id="file" type="file" name="file" id="file" class="custom-file-input">
+            <label id="fileLabel" for="file" class="custom-file-label form-control" onchange="fileInsert()"></label>
+        </div>
+        <button type="submit" class="btn btn-primary">Adicionar</button>
     </form>
 </div>
+
+
+<script>
+    function fileInsert(){
+        fileinput = document.getElementById("file").value
+        document.getElementById("fileLabel").innerText = fileinput
+    }
+
+    function contextChange() {
+        const tipo = document.getElementById("tipos").value;
+        const filein = document.getElementById("file-input")
+        const link = document.getElementById("link");
+
+        if (tipo == 'arquivo') {
+            filein.style.display = 'block';
+            link.style.display = 'none';
+        }else if (tipo == 'link'){
+            filein.style.display = 'none';
+            link.style.display = 'block';
+        }else{
+            filein.style.display = 'none';
+            link.style.display = 'none';
+        }
+
+    }
+</script>

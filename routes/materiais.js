@@ -10,10 +10,11 @@ require('../models/Material');
 const Material = mongoose.model('materiais');
 
 /* Add Material Form from a folder*/
-router.get('/add/:nome',  (req, res) => {
+router.get('/add/:materia',  (req, res) => {
 	//console.log(req.materias);
 	res.render('materiais/add', {
-        nome: req.params.nome
+		materias : req.materias,
+		materia: req.params.nome
 	});	
 });
 

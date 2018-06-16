@@ -13,6 +13,10 @@
   width: 100px;
   margin: auto;
 }
+
+.showing{
+  display: none;
+}
   
 :root {
   --jumbotron-padding-y: 3rem;
