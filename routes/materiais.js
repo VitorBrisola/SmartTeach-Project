@@ -1,36 +1,33 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const passport = require('passport');
-
 const router = express.Router();
+const connection  = require('../config/database');
 
-/* Load mongrid (mongo + gridfs) helper */
-const mongrid = require('../helpers/mongrid');
 
 /* Load Material Model */
 require('../models/Material');
-const Material = mongoose.model('materiais');
+const Material = connection.db.model('materiais');
 
 /* Add Material Form from a folder*/
-router.get('/add/:materia',  (req, res) => {
+router.get('/add/:materia', (req, res) => {
 	//console.log(req.materias);
 	res.render('materiais/add', {
-		materias : req.materias,
+		materias: req.materias,
 		materia: req.params.nome
-	});	
+	});
 });
 
 /* Process Form and Validation */
-router.post('/', mongrid.upload.single('file'), (req, res) => {
+router.post('/', connection.upload.single('file'), (req, res) => {
 	//res.json({file: req.file});
-	
+
 	let errors = [], filename, link;
 
 	/* Checking for missing fields */
 	if (!req.body.name) {
 		errors.push({ text: 'Adicione um nome' });
 	}
-	
+
 	if (!req.body.desc) {
 		errors.push({ text: 'Adicione uma descrição' });
 	}
@@ -56,10 +53,10 @@ router.post('/', mongrid.upload.single('file'), (req, res) => {
 		if (req.body.tipo == 'arquivo') {
 			filename = req.file.filename;
 
-        } else if (req.body.tipo == 'link') {
-            link = req.body.link;
+		} else if (req.body.tipo == 'link') {
+			link = req.body.link;
 		}
-		
+
 		/* Creating a new material */
 		const newMaterial = {
 			name: req.body.name,
@@ -69,7 +66,7 @@ router.post('/', mongrid.upload.single('file'), (req, res) => {
 			filename: filename,
 			link: link
 		};
-		
+
 		/* Saving it to the mongo database */
 		new Material(newMaterial)
 			.save()

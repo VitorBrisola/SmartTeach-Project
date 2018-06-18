@@ -1,41 +1,48 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
+/* Load database connection */
+const connection = require('../config/database');
 
 /* Curly braces to only import some functions */
 //const { ensureAuthenticated } = require('../helpers/auth');
 
-/* Load mongrid (mongo + gridfs) helper */
-const mongrid = require('../helpers/mongrid');
 
 /* Load Material Model */
 require('../models/Material');
-const Material = mongoose.model('materiais');
+const Material = connection.db.model('materiais');
 
 /* MELHORAR ISSO FALTA COIOSAAAA */
 /* Material index page */
 router.get('/:materia', (req, res) => {
-	materiais = Material.find({ materia: req.params.materia }) // Searching for the materiais of the materia
-		.sort({ date: 'desc' });
-
-	console.log(materiais);
-	
-	res.render('materias/index', {
-		materia: req.params.materia,
-		materiais: materiais
-	});
-	/*
-	gfs.files.find().toArray((err, files) => {
-		// Check if files
-		if (!files || files.length === 0) {
-			return res.status(404).json({
-				err: 'No files exist'
+	console.log('entered');
+	Material.find({ materia: req.params.materia }) // Searching for the materiais of the materia
+		.sort({ date: 'desc' })
+		.then(materiais => {
+			console.log('uashdhusad');
+			materiais.forEach(function (material) {
+				
+				console.log(material);
+			
+				connection.gfs.files.findOne({ filename: material.filename }, (err, file) => {
+					// Check if file
+					if (!file || file.length === 0) {
+						return res.status(404).json({
+							err: 'No file exists'
+						});
+					}
+					material.file = file;
+				});
+				
 			});
-		}
+			res.json(materiais);
+			/*res.render('materias/index', {
+				materia: req.params.materia,
+				materiais: materiais
+			});*/
+		});
 
-		// Files exist
-		return res.json(files);
-	});*/
+	console.log('ausduhsadhuashdu');
 });
 
 /* Add Material Form from a folder*/

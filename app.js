@@ -3,7 +3,7 @@ const path = require('path');
 const exphbs = require('express-handlebars');
 const methodOverride = require('method-override');
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
+const db = require('./config/database');
 const flash = require('connect-flash');
 const session = require('express-session');
 
@@ -17,18 +17,6 @@ const materiais = require('./routes/materiais');
 const ideas = require('./routes/ideas');
 const users = require('./routes/users');
 */
-
-/* Map global promise - getting rid of warining */
-mongoose.Promise = global.Promise;
-/* Mongoose Middleware */
-/* Connect to mongoose */
-/* To work using docker use: mongodb://mongo:27017/smartteach-dev 
-   To work using local host use mongodb://localhost:27017/smartteach-dev
-*/
-const mongoURI = 'mongodb://localhost:27017/smartteach-dev';
-mongoose.connect(mongoURI)
-	.then(() => console.log('Mongo DB Connected...'))
-	.catch(err => console.log(err));
 
 /* Handlebars Middleware*/
 app.engine('handlebars', exphbs({
