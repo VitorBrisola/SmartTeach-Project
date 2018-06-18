@@ -1,9 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const passport = require('passport');
+
 const router = express.Router();
 
-/* Curly braces to only import some functions */
-//const { ensureAuthenticated } = require('../helpers/auth');
+/* Load mongrid (mongo + gridfs) helper */
+const mongrid = require('../helpers/mongrid');
 
 /* Load Material Model */
 require('../models/Material');
@@ -19,9 +21,10 @@ router.get('/add/:materia',  (req, res) => {
 });
 
 /* Process Form and Validation */
-router.post('/', (req, res) => {
-	console.log('SUMBIT')
-	let errors = [];
+router.post('/', mongrid.upload.single('file'), (req, res) => {
+	//res.json({file: req.file});
+	
+	let errors = [], filename, link;
 
 	/* Checking for missing fields */
 	if (!req.body.name) {
@@ -36,21 +39,37 @@ router.post('/', (req, res) => {
 		errors.push({ text: 'Vincule uma matéria ao material' });
 	}
 
+	if (!req.body.tipo) {
+		errors.push({ text: 'Selecione o tipo do arquivo' });
+	}
+
 	/* If any errors respond with errors to user */
 	if (errors.length > 0) {
 		res.render('materiais/add', {
 			errors: errors,
 			name: req.body.name,
 			desc: req.body.desc,
-			materia: req.body.materia
+			materia: req.body.materia,
+			tipo: req.body.tipo
 		});
 	} else {
+		if (req.body.tipo == 'arquivo') {
+			filename = req.file.filename;
+
+        } else if (req.body.tipo == 'link') {
+            link = req.body.link;
+		}
+		
 		/* Creating a new material */
 		const newMaterial = {
 			name: req.body.name,
 			desc: req.body.desc,
-			materia: req.body.materia
+			materia: req.body.materia,
+			tipo: req.body.tipo,
+			filename: filename,
+			link: link
 		};
+		
 		/* Saving it to the mongo database */
 		new Material(newMaterial)
 			.save()

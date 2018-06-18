@@ -18,6 +18,17 @@ const MaterialSchema = new Schema({
         type: String,
         required: true
     },
+    tipo : {
+        type: String,
+        required: true
+    },
+    /* Crypto filename from gridfs */
+    filename: {
+        type: String
+    },
+    link: {
+        type : String
+    }, 
     date: {
         type: Date,
         default: Date.now

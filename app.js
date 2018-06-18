@@ -6,10 +6,6 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const flash = require('connect-flash');
 const session = require('express-session');
-const passport = require('passport');
-const multer = require('multer');
-const GridFsStorage = require('multer-gridfs-storage');
-const Grid = require('gridfs-stream');
 
 const app = express();
 
@@ -22,12 +18,6 @@ const ideas = require('./routes/ideas');
 const users = require('./routes/users');
 */
 
-/* Passport Config 
-require('./config/passport')(passport);
- DB configuration 
-const db = require('./config/database');
-*/
-
 /* Map global promise - getting rid of warining */
 mongoose.Promise = global.Promise;
 /* Mongoose Middleware */
@@ -35,14 +25,10 @@ mongoose.Promise = global.Promise;
 /* To work using docker use: mongodb://mongo:27017/smartteach-dev 
    To work using local host use mongodb://localhost:27017/smartteach-dev
 */
-mongoose.connect('mongodb://mongo:27017/smartteach-dev')
+const mongoURI = 'mongodb://localhost:27017/smartteach-dev';
+mongoose.connect(mongoURI)
 	.then(() => console.log('Mongo DB Connected...'))
 	.catch(err => console.log(err));
-
-mongoose.connection.once('open', function () {
-	// All OK - fire (emit) a ready event. 
-	app.emit('ready');
-});
 
 /* Handlebars Middleware*/
 app.engine('handlebars', exphbs({
@@ -105,13 +91,11 @@ app.get('/', (req, res) => {
 /* process.env.PORT to deploy to heroku */
 const port = process.env.PORT || 5000;
 
-/* */
-app.on('ready', function () {
-	app.listen(port, () => {
-		/* back ticks work like format in python 3 */
-		console.log(`Server started on port ${port}`);
-	});
+app.listen(port, () => {
+	/* back ticks work like format in python 3 */
+	console.log(`Server started on port ${port}`);
 });
+
 
 /* Use Routes */
 app.use('/materias', materias);

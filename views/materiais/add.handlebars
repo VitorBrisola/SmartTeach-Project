@@ -1,6 +1,6 @@
 <div class="card card-body">
     <h3>Adicionar Material</h3>
-    <form action="/materiais" method="post">
+    <form action="/materiais" method="post" enctype="multipart/form-data">
         <div class="form-group">
             <input type="text" name="name" class="form-control" placeholder="Nome" required>
         </div>
@@ -28,19 +28,14 @@
         </div>
         <div id="file-input" class="showing form-group custom-file mb-3">
             <input id="file" type="file" name="file" id="file" class="custom-file-input">
-            <label id="fileLabel" for="file" class="custom-file-label form-control" onchange="fileInsert()"></label>
+            <label for="file" class="custom-file-label form-control" ></label>
         </div>
-        <button type="submit" class="btn btn-primary">Adicionar</button>
+        <button value="submit" type="submit" class="btn btn-primary">Adicionar</button>
     </form>
 </div>
 
 
 <script>
-    function fileInsert(){
-        fileinput = document.getElementById("file").value
-        document.getElementById("fileLabel").innerText = fileinput
-    }
-
     function contextChange() {
         const tipo = document.getElementById("tipos").value;
         const filein = document.getElementById("file-input")
@@ -49,10 +44,10 @@
         if (tipo == 'arquivo') {
             filein.style.display = 'block';
             link.style.display = 'none';
-        }else if (tipo == 'link'){
+        } else if (tipo == 'link') {
             filein.style.display = 'none';
             link.style.display = 'block';
-        }else{
+        } else {
             filein.style.display = 'none';
             link.style.display = 'none';
         }
