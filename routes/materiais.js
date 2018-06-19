@@ -3,7 +3,6 @@ const passport = require('passport');
 const router = express.Router();
 const connection  = require('../config/database');
 
-
 /* Load Material Model */
 require('../models/Material');
 const Material = connection.db.model('materiais');
@@ -76,6 +75,16 @@ router.post('/', connection.upload.single('file'), (req, res) => {
 			});
 	}
 
+});
+
+/* PEGAR PARTE DE ACHAR O ARQUIVO E COLOCAR AQUIIII MUITO MAIS OTIMIZADO SO ACHAR O ARQUIVO QUANDO FOR BAIXAR!!!!!*/
+/* Add Material Form from a folder*/
+router.get('/download/:filename', (req, res) => {
+	//console.log(req.materias);
+	res.render('materiais/add', {
+		materias: req.materias,
+		materia: req.params.nome
+	});
 });
 
 /* Edit Form Process 

@@ -19,7 +19,12 @@
                     <div class="card-body">
                         <h5 class="card-title">{{name}}</h5>
                         <p class="card-text">{{desc}}</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                        {{#if file}}
+                            <a href="/materiais/download/{{filename}}" class="btn btn-primary">Download</a>
+                        {{/if}}
+                        {{#if link}}
+                            <a href="{{link}}" class="btn btn-primary">Link</a>
+                        {{/if}}                        
                     </div>
                 </div>
             </div>
