@@ -1,11 +1,15 @@
 const express = require('express');
-const passport = require('passport');
 const router = express.Router();
-const connection  = require('../config/database');
+
+/* Loading db connection */
+const conn = require('../app');
 
 /* Load Material Model */
 require('../models/Material');
-const Material = connection.db.model('materiais');
+const Material = conn.model('materiais');
+
+/* Loading upload helper */
+const upload = require('../helpers/upload');
 
 /* Add Material Form from a folder*/
 router.get('/add/:materia', (req, res) => {
@@ -17,9 +21,7 @@ router.get('/add/:materia', (req, res) => {
 });
 
 /* Process Form and Validation */
-router.post('/', connection.upload.single('file'), (req, res) => {
-	//res.json({file: req.file});
-
+router.post('/', upload.single('file'), (req, res) => {
 	let errors = [], filename, link;
 
 	/* Checking for missing fields */
@@ -77,15 +79,6 @@ router.post('/', connection.upload.single('file'), (req, res) => {
 
 });
 
-/* PEGAR PARTE DE ACHAR O ARQUIVO E COLOCAR AQUIIII MUITO MAIS OTIMIZADO SO ACHAR O ARQUIVO QUANDO FOR BAIXAR!!!!!*/
-/* Add Material Form from a folder*/
-router.get('/download/:filename', (req, res) => {
-	//console.log(req.materias);
-	res.render('materiais/add', {
-		materias: req.materias,
-		materia: req.params.nome
-	});
-});
 
 /* Edit Form Process 
 router.put('/:id', (req, res) => {

@@ -3,20 +3,30 @@ const path = require('path');
 const exphbs = require('express-handlebars');
 const methodOverride = require('method-override');
 const bodyParser = require('body-parser');
-const db = require('./config/database');
 const flash = require('connect-flash');
 const session = require('express-session');
+const mongoose = require('mongoose');
+const Grid = require('gridfs-stream');	
+
+/* Map global promise - getting rid of warining */
+mongoose.Promise = global.Promise;
+/* Mongoose Middleware */
+/* Connect to mongoose */
+/* To work using docker use: mongodb://mongo:27017/smartteach-dev 
+   To work using local host use mongodb://localhost:27017/smartteach-dev
+*/
+const mongoURI = require('./config/database');
+const conn = mongoose.createConnection(mongoURI);
+
+let gfs;
+
+conn.once('open', () =>{
+	console.log('MongoDB Connected...');
+	app.emit('ready');  
+});
 
 const app = express();
 
-/* Load Routes */
-const materias = require('./routes/materias');
-const materiais = require('./routes/materiais');
-
-/* Load Routes 
-const ideas = require('./routes/ideas');
-const users = require('./routes/users');
-*/
 
 /* Handlebars Middleware*/
 app.engine('handlebars', exphbs({
@@ -76,15 +86,32 @@ app.get('/', (req, res) => {
 	});
 });
 
-/* process.env.PORT to deploy to heroku */
-const port = process.env.PORT || 5000;
-
-app.listen(port, () => {
-	/* back ticks work like format in python 3 */
-	console.log(`Server started on port ${port}`);
+/* Download get is here because of the GFS problem */
+app.get('/see/:materia-:filename', (req, res) => {
+	// Read output to browser
+	const readstream = gfs.createReadStream(req.params.filename);
+	readstream.pipe(res);
 });
 
+/* process.env.PORT to deploy to heroku */
+const port = process.env.PORT || 5001;
 
-/* Use Routes */
-app.use('/materias', materias);
-app.use('/materiais', materiais);
+/* Load Routes */
+app.on('ready', () => {
+	app.listen(port, () => {
+		/* back ticks work like format in python 3 */
+		console.log(`Server started on port ${port}`);
+	});
+	const materias = require('./routes/materias');
+	const materiais = require('./routes/materiais');
+
+	/* Use Routes */
+	app.use('/materias', materias);
+	app.use('/materiais', materiais);
+
+	// Init stream
+	gfs = Grid(conn.db, mongoose.mongo);
+	gfs.collection('uploads');
+});
+
+module.exports = conn;
