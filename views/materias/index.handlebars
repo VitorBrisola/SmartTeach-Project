@@ -5,8 +5,16 @@
         <p>
             <a href="{{materia}}/add" class="btn btn-primary my-2">Adicionar Material</a>
         </p>
+
+        <form action="/materias/{{materia}}" method="GET" class="form">
+            <div class="form-group">
+                <input type="text" name="search" placeholder="Buscar materiais..." class="form-control">
+            </div>
+        </form>
     </div>
+
 </section>
+
 
 <div class="album py-5 bg-light">
     <div class="container">
@@ -20,11 +28,10 @@
                         <h5 class="card-title">{{name}}</h5>
                         <p class="card-text">{{desc}}</p>
                         {{#if filename}}
-                            <a href="/see/{{materia}}-{{filename}}" target="_blank" class="btn btn-primary">Abrir</a>
+                        <a href="/see/{{materia}}-{{filename}}" target="_blank" class="btn btn-primary">Abrir</a>
+                        {{/if}} {{#if link}}
+                        <a href="{{link}}" target="_blank" class="btn btn-primary">Ir</a>
                         {{/if}}
-                        {{#if link}}
-                            <a href="{{link}}" target="_blank" class="btn btn-primary">Ir</a>
-                        {{/if}}                        
                     </div>
                 </div>
             </div>
