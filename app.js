@@ -81,12 +81,12 @@ app.use(function (req, res, next) {
 	res.locals.success_msg = req.flash('success_msg');
 	res.locals.error_msg = req.flash('error_msg');
 	res.locals.error = req.flash('error');
-	res.locals.materias = req.materias = [{ name: 'Calculo', image: '/img/calculoIcon.png', url: '/materias/Calculo' },
-	{ name: 'Geometria Analitica', image: '/img/estatisticaIcon.png', url: '/materias/GeometriaAnalitica' },
-	{ name: 'Computação', image: '/img/computacaoIcon.png', url: '/materias/Computacao' },
-	{ name: 'Estatística', image: '/img/estatisticaIcon.png', url: '/materias/Estatistica' },
-	{ name: 'Física', image: '/img/estatisticaIcon.png', url: '/materias/Fisica' },
-	{ name: 'Química', image: '/img/estatisticaIcon.png', url: '/materias/Quimica' }]
+	res.locals.materias = req.materias = [{ name: 'Calculo', image: 'img/calculo.png', url: '/materias/Calculo' },
+	{ name: 'Geometria Analitica', image: '/img/ga.png', url: '/materias/GeometriaAnalitica' },
+	{ name: 'Computação', image: '/img/computacao.png', url: '/materias/Computacao' },
+	{ name: 'Estatística', image: '/img/estatistica.png', url: '/materias/Estatistica' },
+	{ name: 'Física', image: '/img/fisica.png', url: '/materias/Fisica' },
+	{ name: 'Química', image: '/img/quimica.png', url: '/materias/Quimica' }]
 	next();
 });
 
