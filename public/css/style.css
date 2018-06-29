@@ -27,7 +27,7 @@
   padding-bottom: var(--jumbotron-padding-y);
   margin-bottom: 0;
   /* background-color: #fff; */
-  background-image: '/img/background.jpg';
+  background-image: '/img/background.png';
 }
 @media (min-width: 768px) {
   .jumbotron {
