@@ -83,3 +83,7 @@ footer p {
   background-color: #eaca03;
   color: #3e43e0;
 }
+
+.img-thumbnail:hover {
+  border-color: #eaca03;
+}
