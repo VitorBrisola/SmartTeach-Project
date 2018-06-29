@@ -58,3 +58,17 @@ footer p {
 }
 
 .box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
+
+.btn-primary {
+  background-color: #4349fa;
+}
+
+.btn-primary:hover {
+  background-color: #eaca03;
+  color: #3e43e0;
+}
+
+.btn-primary:focus {
+  background-color: #eaca03;
+  color: #3e43e0;
+}
