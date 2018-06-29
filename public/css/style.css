@@ -1,6 +1,10 @@
+body {
+  background-image: url('img/background.png');
+}
+
 .logo{
-    width: 220px;
-    margin: auto;
+  width: 220px;
+   margin: auto;
 }
 
 .navIcon{
@@ -27,7 +31,6 @@
   padding-bottom: var(--jumbotron-padding-y);
   margin-bottom: 0;
   /* background-color: #fff; */
-  background-image: '/img/background.png';
 }
 @media (min-width: 768px) {
   .jumbotron {
@@ -46,7 +49,6 @@
 
 .jumbotron .container {
   max-width: 60rem;
-  background-image: "/public/img/background.png";
 }
 
 footer {
