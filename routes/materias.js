@@ -30,7 +30,6 @@ router.get('/:materia', (req, res) => {
 			});
 
 	} else {
-		// Get all campgrounds from DB
 		Material.find({ materia: req.params.materia }) // Searching for the materiais of the materia
 			.sort({ date: 'desc' })
 			.then(materiais => {
@@ -40,8 +39,6 @@ router.get('/:materia', (req, res) => {
 				});
 			});
 	}
-
-
 });
 
 
