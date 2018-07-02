@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    	<meta charset="UTF-8">
+        <title></title>
+        <link rel="stylesheet" href="style.css" type="text/css">
+		<script src="main.js"></script>
+    </head>
+    <body>
+        <div class="heading">
+            <button class="register">
+                <a href="#modal1" class="registerLink">Criar conta</a>
+            </button>
+
+            <button class="login">
+                <a href="#modal2" class="loginLink">Entrar</a>
+            </button>
+        </div>
+        
+        <div class="modal_container" id="modal1">
+            <div class="modal2">
+                <a href="#" class="close">x</a>
+                <span class="modal_heading">
+                    Cadastro
+                </span>
+                <form action="#">
+                    <input type="text" placeholder="Email" ><br>
+                    <input type="text" placeholder="Confirmar Email" ><br>
+                    <input type="text" placeholder="Usuário"><br>
+                    <input type="password" placeholder="Senha"><br>                    
+                    <input type="password" placeholder="Confirmar senha" ><br>
+                    <input type="submit" class="btnRegister" value="Criar conta">
+                </form>
+            </div>
+        </div>
+
+        <div class="modal_container" id="modal2">
+            <div class="modal">
+                <a href="#" class="close">x</a>
+                <span class="modal_heading">
+                    Log in
+                </span>
+                <form action="#">
+                    <input type="text" placeholder="Usuário"><br>
+                    <input type="password" placeholder="Senha"><br>
+                    <input type="submit" class="btnLogin" value="Entrar">
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
