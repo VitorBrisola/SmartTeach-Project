@@ -2,8 +2,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 /* Load Idea Model */
-require('../models/Materiais');
-const Material = mongoose.model('');
+//require('../models/Materiais');
+//const Material = mongoose.model('');
 
 /* Schema that will be used for the User 
     User has a name, email, password.

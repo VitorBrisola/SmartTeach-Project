@@ -13,6 +13,12 @@ const Material = conn.model('materiais');
 
 /* Material index page */
 router.get('/:materia', (req, res) => {
+	//console.log(req.materia.name);
+	if (req.materias.includes(req.params.materia)) {
+		console.log('CONTEM')
+		//req.flash('error_msg', 'Matéria não existe');
+		//res.redirect('/');
+	}
 	var noMatch = null;
 	if (req.query.search) {
 
@@ -28,7 +34,6 @@ router.get('/:materia', (req, res) => {
 					materiais: materiais
 				});
 			});
-
 	} else {
 		Material.find({ materia: req.params.materia }) // Searching for the materiais of the materia
 			.sort({ date: 'desc' })
@@ -49,7 +54,7 @@ router.get('/:nome/add', (req, res) => {
 });
 
 function escapeRegex(text) {
-    return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
+	return text.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 };
 
 module.exports = router;

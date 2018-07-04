@@ -1,22 +1,13 @@
 <section class="jumbotron text-center">
     <div class="container">
-        <h1 class="jumbotron-heading">Pasta: {{materia}}.</h1>
-        <p class="lead text-muted">Encontre uma variedade de materiais relacionado a {{materia}}.</p>
+        <h1 class="jumbotron-heading">Meus Materiais.</h1>
         {{#if user}}
-            <p>
-                <a href="{{materia}}/add" class="btn btn-primary my-2">Adicionar Material</a>
-            </p>
+        <p>
+            <a href="../materiais/add/null" class="btn btn-primary my-2">Adicionar Material</a>
+        </p>
         {{/if}}
-        
-        <form action="/materias/{{materia}}" method="GET" class="form">
-            <div class="form-group">
-                <input type="text" name="search" placeholder="Buscar materiais..." class="form-control">
-            </div>
-        </form>
     </div>
-
 </section>
-
 
 <div class="album py-5 bg-light">
     <div class="container">
@@ -30,10 +21,14 @@
                         <h5 class="card-title">{{name}}</h5>
                         <p class="card-text">{{desc}}</p>
                         {{#if filename}}
-                        <a href="/see/{{materia}}-{{filename}}" target="_blank" class="btn btn-primary">Abrir</a>
+                        <a href="/see/{{materia}}-{{filename}}" target="_blank" class="btn btn-primary btn-block mb-2">Abrir</a>
                         {{/if}} {{#if link}}
-                        <a href="{{link}}" target="_blank" class="btn btn-primary">Ir</a>
+                        <a href="{{link}}" target="_blank" class="btn btn-primary btn-block mb-2">Abrir</a>
                         {{/if}}
+                        <form method="post" action="/materiais/{{id}}?_method=DELETE">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button type="submit" class="btn btn-danger btn-block" value="Deletar">Deletar</button>
+                        </form>
                     </div>
                 </div>
             </div>

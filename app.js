@@ -6,7 +6,10 @@ const bodyParser = require('body-parser');
 const flash = require('connect-flash');
 const session = require('express-session');
 const mongoose = require('mongoose');
-const Grid = require('gridfs-stream');	
+const Grid = require('gridfs-stream');
+const passport = require('passport')
+
+const app = express();
 
 /* Map global promise - getting rid of warining */
 mongoose.Promise = global.Promise;
@@ -20,13 +23,10 @@ const conn = mongoose.createConnection(mongoURI);
 
 let gfs;
 
-conn.once('open', () =>{
+conn.once('open', () => {
 	console.log('MongoDB Connected...');
-	app.emit('ready');  
+	app.emit('ready');
 });
-
-const app = express();
-
 
 /* Handlebars Middleware*/
 app.engine('handlebars', exphbs({
@@ -52,10 +52,10 @@ app.use(session({
 	saveUninitialized: true
 }));
 
-/* Passport middleware
+/* Passport middleware */
 app.use(passport.initialize());
 app.use(passport.session());
-*/
+
 
 /* Flash Middleware */
 app.use(flash());
@@ -65,6 +65,7 @@ app.use(function (req, res, next) {
 	res.locals.success_msg = req.flash('success_msg');
 	res.locals.error_msg = req.flash('error_msg');
 	res.locals.error = req.flash('error');
+	res.locals.user = req.user || null;
 	res.locals.materias = req.materias = [{ name: 'Cálculo', image: 'img/calculoIcon.png', url: '/materias/Calculo' },
 	{ name: 'Geometria Analitica', image: '/img/geometriaanaliticaIcon.png', url: '/materias/GeometriaAnalitica' },
 	{ name: 'Computação', image: '/img/computacaoIcon.png', url: '/materias/Computacao' },
@@ -79,9 +80,7 @@ app.use(function (req, res, next) {
 	res = response stuff
 */
 app.get('/', (req, res) => {
-	const title = 'Welcome';
 	res.render('index', {
-		title: title,
 		materia: res.locals.materias
 	});
 });
@@ -104,10 +103,15 @@ app.on('ready', () => {
 	});
 	const materias = require('./routes/materias');
 	const materiais = require('./routes/materiais');
+	const users = require('./routes/users');
 
 	/* Use Routes */
 	app.use('/materias', materias);
 	app.use('/materiais', materiais);
+	app.use('/users', users);
+
+	/* Passport Config */
+	require('./config/passport')(passport);
 
 	// Init stream
 	gfs = Grid(conn.db, mongoose.mongo);

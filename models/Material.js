@@ -28,6 +28,10 @@ const MaterialSchema = new Schema({
     },
     link: {
         type : String
+    },
+    user:{
+        type: String,
+        required: true
     }, 
     date: {
         type: Date,

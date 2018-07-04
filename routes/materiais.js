@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
+/* Curly braces to only import some functions */
+const { ensureAuthenticated } = require('../helpers/auth');
+
 /* Loading db connection */
 const conn = require('../app');
 
@@ -12,8 +15,7 @@ const Material = conn.model('materiais');
 const upload = require('../helpers/upload');
 
 /* Add Material Form from a folder*/
-router.get('/add/:materia', (req, res) => {
-	//console.log(req.materias);
+router.get('/add/:materia', ensureAuthenticated, (req, res) => {
 	res.render('materiais/add', {
 		materias: req.materias,
 		materia: req.params.nome
@@ -21,7 +23,7 @@ router.get('/add/:materia', (req, res) => {
 });
 
 /* Process Form and Validation */
-router.post('/', upload.single('file'), (req, res) => {
+router.post('/', ensureAuthenticated, upload.single('file'), (req, res) => {
 	let errors = [], filename, link;
 
 	/* Checking for missing fields */
@@ -39,6 +41,12 @@ router.post('/', upload.single('file'), (req, res) => {
 
 	if (!req.body.tipo) {
 		errors.push({ text: 'Selecione o tipo do arquivo' });
+	} else {
+		if (req.body.tipo == 'arquivo' && !req.file.filename) {
+			errors.push({ text: 'Selecione um arquivo para ser enviado' });
+		} else if (req.body.tipo == 'link' && !req.body.link) {
+			errors.push({ text: 'Indique um link para o material' });
+		}
 	}
 
 	/* If any errors respond with errors to user */
@@ -65,116 +73,73 @@ router.post('/', upload.single('file'), (req, res) => {
 			materia: req.body.materia,
 			tipo: req.body.tipo,
 			filename: filename,
-			link: link
+			link: link,
+			user: req.user.id
 		};
 
 		/* Saving it to the mongo database */
 		new Material(newMaterial)
 			.save()
 			.then(idea => {
-				req.flash('success_msg', 'Material adicionado a pasta de ' + newMaterial.materia);
+				req.flash('success_msg', 'Parabéns ' + req.user.name + ' seu material adicionado a pasta de ' + newMaterial.materia);
 				res.redirect('/materias/' + newMaterial.materia);
 			});
 	}
 
 });
 
-
-/* Edit Form Process 
-router.put('/:id', (req, res) => {
-	Idea.findOne({
-		_id: req.params.id
-	})
-		.then(idea => {
-			// new values
-			idea.title = req.body.title;
-			idea.details = req.body.details;
-
-			idea.save()
-				.then(idea => {
-					req.flash('success_msg', 'Video idea updated');
-					res.redirect('/');
-				})
-		});
-});
-
 /* Edit Idea Form
-router.get('/edit/:id',  (req, res) => {
-	Idea.findOne({
+router.get('/edit/:id', ensureAuthenticated, (req, res) => {
+	Material.findOne({
 		_id: req.params.id
 	})
-		.then(idea => {
-			if (idea.user != req.user.id) {
-				req.flash('error_msg', 'Not Authorized')
-				res.redirect('/ideas');
+		.then(material => {
+			if (material.user != req.user.id) {
+				req.flash('error_msg', 'Não Autorizado')
+				res.redirect('/' + material.materia);
 			} else {
-				res.render('ideas/edit', {
-					idea: idea
+				res.render('materiais/edit', {
+					name: material.name,
+					desc: material.desc,
+					materia: material.materia,
+					tipo: material.tipo,
+					filename: material.filename,
+					link: material.link,
 				});
 			}
 		});
-});*/
+});
 
-/* Process Form and Validation 
-router.post('/', (req, res) => {
-	let errors = [];
 
-	if (!req.body.title) {
-		errors.push({ text: 'Please add a title' });
-	}
-
-	if (!req.body.details) {
-		errors.push({ text: 'Please add a details' });
-	}
-
-	if (errors.length > 0) {
-		res.render('ideas/add', {
-			errors: errors,
-			title: req.body.title,
-			details: req.body.details
-		});
-	} else {
-		const newIdea = {
-			title: req.body.title,
-			details: req.body.details,
-			user: req.user.id
-		};
-
-		new Idea(newIdea)
-			.save()
-			.then(idea => {
-				req.flash('success_msg', 'Video idea added');
-				res.redirect('/');
-			});
-	}
-
-});*/
-
-/* Edit Form Process 
-router.put('/:id', (req, res) => {
+ Edit Form Process 
+router.put('/:id', ensureAuthenticated, (req, res) => {
 	Idea.findOne({
 		_id: req.params.id
 	})
 		.then(idea => {
 			// new values
-			idea.title = req.body.title;
-			idea.details = req.body.details;
+			name = req.body.name;
+			desc = req.body.desc;
+			materia = req.body.materia;
+			tipo = req.body.tipo;
+			filename = filename;
+			link = link;
 
-			idea.save()
+			material.save()
 				.then(idea => {
 					req.flash('success_msg', 'Video idea updated');
-					res.redirect('/');
+					res.redirect('/materias/' + material.materia);
 				})
 		});
-});*/
+}); */
 
-/* Delete idea 
-router.delete('/:id', (req, res) => {
-	Idea.remove({ _id: req.params.id })
+/* Delete idea */
+router.delete('/:id', ensureAuthenticated, (req, res) => {
+	Material.remove({ _id: req.params.id })
 		.then(() => {
-			req.flash('success_msg', 'Video idea removed');
-			res.redirect('/');
+			req.flash('success_msg', 'Material removido com sucesso');
+			res.redirect('/users/mymaterials');
 		});
-});*/
+});
 
 module.exports = router;

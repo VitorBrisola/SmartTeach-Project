@@ -1,10 +1,12 @@
 const LocalStrategy = require('passport-local').Strategy;
-const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+
+/* Loading database connection*/
+const conn = require('../app');
 
 /* Load User Model */
 require('../models/User');
-const User = mongoose.model('users');
+const User = conn.model('users');
 
 module.exports = function (passport) {
     passport.use(new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
@@ -12,7 +14,7 @@ module.exports = function (passport) {
             email: email
         }).then(user => {
             if (!user) {
-                return done(null, false, { message: 'User not found' });
+                return done(null, false, { message: 'Usuário não encontrado' });
             }
             /* Match password 
                 password, user.password and a callback function
@@ -22,7 +24,7 @@ module.exports = function (passport) {
                 if (isMatch) {
                     return done(null, user);
                 } else {
-                    return done(null, false, { message: 'Password incorrect' });
+                    return done(null, false, { message: 'Senha incorreta' });
                 }
             });
         });
