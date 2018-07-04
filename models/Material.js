@@ -18,7 +18,7 @@ const MaterialSchema = new Schema({
         type: String,
         required: true
     },
-    tipo : {
+    tipo: {
         type: String,
         required: true
     },
@@ -27,12 +27,20 @@ const MaterialSchema = new Schema({
         type: String
     },
     link: {
-        type : String
+        type: String
     },
-    user:{
+    user: {
         type: String,
         required: true
-    }, 
+    },
+    /* Saves who liked the post */
+    /* Get the num of likes is equal to get the num of likers */
+    likers:
+        [{
+            type: String,
+            required: true
+        }]
+    ,
     date: {
         type: Date,
         default: Date.now

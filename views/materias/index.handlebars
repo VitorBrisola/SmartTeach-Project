@@ -3,11 +3,11 @@
         <h1 class="jumbotron-heading">Pasta: {{materia}}.</h1>
         <p class="lead text-muted">Encontre uma variedade de materiais relacionado a {{materia}}.</p>
         {{#if user}}
-            <p>
-                <a href="{{materia}}/add" class="btn btn-primary my-2">Adicionar Material</a>
-            </p>
+        <p>
+            <a href="{{materia}}/add" class="btn btn-primary my-2">Adicionar Material</a>
+        </p>
         {{/if}}
-        
+
         <form action="/materias/{{materia}}" method="GET" class="form">
             <div class="form-group">
                 <input type="text" name="search" placeholder="Buscar materiais..." class="form-control">
@@ -25,15 +25,26 @@
             <div class="col-md-4">
                 <!-- for each loop in handlebars -->
                 <div class="card" style="width: 18rem;">
-                    <img class="card-img-top filethumb" src="/img/filethumb.png" alt="Card image cap">
+                    {{#if link}}
+                    <iframe class="embed-responsive-item" src="{{link}}" allowfullscreen></iframe>
+                    {{/if}}
+                    
                     <div class="card-body">
                         <h5 class="card-title">{{name}}</h5>
                         <p class="card-text">{{desc}}</p>
                         {{#if filename}}
-                        <a href="/see/{{materia}}-{{filename}}" target="_blank" class="btn btn-primary">Abrir</a>
+                        <a href="/see/{{materia}}-{{filename}}" target="_blank" class="btn btn-primary btn-block mb-2">Abrir</a>
                         {{/if}} {{#if link}}
-                        <a href="{{link}}" target="_blank" class="btn btn-primary">Ir</a>
+                        <a href="{{link}}" target="_blank" class="btn btn-primary btn-block mb-2">Ir</a>
+                        {{/if}} {{#if liked}}
+                        <button type="submit" class="btn btn-dark btn-block" disabled>Like {{likes}}</button>
+                        {{else}}
+                        <form action="/materiais/{{id}}?_method=PUT" method="post">
+                            <input type="hidden" name="_method" value="PUT">
+                            <button type="submit" class="btn btn-primary btn-block">Like {{likes}}</button>
+                        </form>
                         {{/if}}
+
                     </div>
                 </div>
             </div>

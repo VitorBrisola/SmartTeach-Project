@@ -13,12 +13,6 @@ const Material = conn.model('materiais');
 
 /* Material index page */
 router.get('/:materia', (req, res) => {
-	//console.log(req.materia.name);
-	if (req.materias.includes(req.params.materia)) {
-		console.log('CONTEM')
-		//req.flash('error_msg', 'Matéria não existe');
-		//res.redirect('/');
-	}
 	var noMatch = null;
 	if (req.query.search) {
 
@@ -27,8 +21,17 @@ router.get('/:materia', (req, res) => {
 			.sort({ date: 'desc' })
 			.then(materiais => {
 				if (materiais.length < 1) {
-					noMatch = "No campgrounds match that query, please try again.";
+					noMatch = "Nenhum material com essa busca";
 				}
+				/* See if user liked or not the material */
+				materiais.forEach(material => {
+					/* Always true because of not signed in users */
+					material.liked = true;
+					if(req.user){
+						material.liked = material.likers.includes(req.user.id);
+					}
+					material.likes = material.likers.length;
+				});
 				res.render('materias/index', {
 					materia: req.params.materia,
 					materiais: materiais
@@ -38,6 +41,16 @@ router.get('/:materia', (req, res) => {
 		Material.find({ materia: req.params.materia }) // Searching for the materiais of the materia
 			.sort({ date: 'desc' })
 			.then(materiais => {
+				/* See if user liked or not the material */
+				materiais.forEach(material => {
+					/* Always true because of not signed in users */
+					material.liked = true;
+					if(req.user){
+						material.liked = material.likers.includes(req.user.id);
+					}
+					material.likes = material.likers.length;
+				});
+
 				res.render('materias/index', {
 					materia: req.params.materia,
 					materiais: materiais

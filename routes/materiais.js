@@ -11,6 +11,10 @@ const conn = require('../app');
 require('../models/Material');
 const Material = conn.model('materiais');
 
+/* Load Material Model */
+require('../models/User');
+const User = conn.model('users');
+
 /* Loading upload helper */
 const upload = require('../helpers/upload');
 
@@ -88,50 +92,23 @@ router.post('/', ensureAuthenticated, upload.single('file'), (req, res) => {
 
 });
 
-/* Edit Idea Form
-router.get('/edit/:id', ensureAuthenticated, (req, res) => {
+// Like Form Process 
+router.put('/:id', ensureAuthenticated, (req, res) => {
 	Material.findOne({
 		_id: req.params.id
 	})
 		.then(material => {
-			if (material.user != req.user.id) {
-				req.flash('error_msg', 'Não Autorizado')
-				res.redirect('/' + material.materia);
-			} else {
-				res.render('materiais/edit', {
-					name: material.name,
-					desc: material.desc,
-					materia: material.materia,
-					tipo: material.tipo,
-					filename: material.filename,
-					link: material.link,
-				});
-			}
-		});
-});
-
-
- Edit Form Process 
-router.put('/:id', ensureAuthenticated, (req, res) => {
-	Idea.findOne({
-		_id: req.params.id
-	})
-		.then(idea => {
-			// new values
-			name = req.body.name;
-			desc = req.body.desc;
-			materia = req.body.materia;
-			tipo = req.body.tipo;
-			filename = filename;
-			link = link;
-
+			material.likers.push(req.user.id);
+			User.findOne({ _id: req.user.id }).then(user => {
+				user.liked.push(material._id);
+			});
 			material.save()
 				.then(idea => {
-					req.flash('success_msg', 'Video idea updated');
+					req.flash('success_msg', 'Curtiu ' + material.name);
 					res.redirect('/materias/' + material.materia);
 				})
 		});
-}); */
+});
 
 /* Delete idea */
 router.delete('/:id', ensureAuthenticated, (req, res) => {
