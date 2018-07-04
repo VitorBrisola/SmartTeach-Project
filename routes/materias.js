@@ -22,20 +22,24 @@ router.get('/:materia', (req, res) => {
 			.then(materiais => {
 				if (materiais.length < 1) {
 					noMatch = "Nenhum material com essa busca";
+					res.render('materias/index', {
+						materia: req.params.materia,
+					});
+				} else {
+					/* See if user liked or not the material */
+					materiais.forEach(material => {
+						/* Always true because of not signed in users */
+						material.liked = true;
+						if (req.user) {
+							material.liked = material.likers.includes(req.user.id);
+						}
+						material.likes = material.likers.length;
+					});
+					res.render('materias/index', {
+						materia: req.params.materia,
+						materiais: materiais
+					});
 				}
-				/* See if user liked or not the material */
-				materiais.forEach(material => {
-					/* Always true because of not signed in users */
-					material.liked = true;
-					if(req.user){
-						material.liked = material.likers.includes(req.user.id);
-					}
-					material.likes = material.likers.length;
-				});
-				res.render('materias/index', {
-					materia: req.params.materia,
-					materiais: materiais
-				});
 			});
 	} else {
 		Material.find({ materia: req.params.materia }) // Searching for the materiais of the materia
@@ -45,7 +49,7 @@ router.get('/:materia', (req, res) => {
 				materiais.forEach(material => {
 					/* Always true because of not signed in users */
 					material.liked = true;
-					if(req.user){
+					if (req.user) {
 						material.liked = material.likers.includes(req.user.id);
 					}
 					material.likes = material.likers.length;

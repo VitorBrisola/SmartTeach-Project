@@ -10,6 +10,7 @@
             <textarea name="desc" class="form-control" placeholder="Descrição" required>{{desc}}</textarea>
         </div>
         <div class="class form-group ">
+            <label for="materia">Matéria</label>
             <select name="materia" class="form-control" required>
                 <option value="" selected disabled hidden>Escolher a Matéria</option>
                 {{#each materias}}
@@ -19,8 +20,9 @@
             </select>
         </div>
         <div class="class form-group">
+            <label for="tipo">Tipo do Material</label>
             <select id="tipos" name="tipo" class="form-control" onchange="contextChange()" required>
-                <option value="" selected disabled hidden>Tipo do Material</option>
+                <option value="" selected disabled hidden>Escolher o Tipo do Material</option>
                 <option value="arquivo">Arquivo</option>
                 <option value="link">Link</option>
             </select>

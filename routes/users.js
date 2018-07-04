@@ -1,8 +1,8 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const passport = require('passport');
 const router = express.Router();
+const Types = require('mongoose').Types;
 
 /* Loading database connection*/
 const conn = require('../app');
@@ -28,7 +28,7 @@ router.get('/register', (req, res) => {
     res.render('users/register');
 });
 
-router.get('/mymaterials', ensureAuthenticated ,(req, res) => {
+router.get('/mymaterials', ensureAuthenticated, (req, res) => {
     Material.find({ user: req.user.id }) // Searching for the materiais of the materia
         .sort({ date: 'desc' })
         .then(materiais => {
@@ -36,6 +36,26 @@ router.get('/mymaterials', ensureAuthenticated ,(req, res) => {
                 materiais: materiais
             });
         });
+});
+
+router.get('/liked', ensureAuthenticated, (req, res) => {
+    User.findOne({ _id: req.user.id }).then(user => {
+        /* Searching for liked materials */
+        Material.find({
+            _id:
+            {
+                "$in": [user.liked]
+            }
+        }) // Searching for the materiais of the materia
+            .sort({ date: 'desc' })
+            .then(materiais => {
+                res.render('users/liked', {
+                    materiais: materiais
+                });
+            });
+    });
+
+
 });
 
 router.post('/login', (req, res, next) => {

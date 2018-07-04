@@ -1,5 +1,5 @@
 <section class="jumbotron text-center">
-    <div class="container">
+    <div class="container" style="margin-bottom: 8em;">
         <h1 class="jumbotron-heading">Pasta: {{materia}}.</h1>
         <p class="lead text-muted">Encontre uma variedade de materiais relacionado a {{materia}}.</p>
         {{#if user}}
@@ -15,40 +15,55 @@
         </form>
     </div>
 
-</section>
 
+    <div class="album py-5">
+        <div class="container">
+            <div class="row ml-3">
+                {{#if materiais}} {{#each materiais}}
+                <div class="col-md-4">
+                    <!-- for each loop in handlebars -->
+                    <div class="card" style="width: 18rem; margin-bottom: 3em;">
+                        <div class="card-body">
+                            {{#if link}}
+                            <img src="/img/link.png" class="card-img-top thumb" alt="link"> {{else}}
+                            <img src="/img/pdf.png" class="thumb" alt="pdf"> {{/if}}
+                            <br>
+                            <hr>
+                            <br>
+                            <h5 class="card-title">{{name}}</h5>
+                            <hr>
+                            <p class="card-text">{{desc}}</p>
+                            <hr>
+                            <br>
+                            <div class="btn-toolbar">
+                                {{#if filename}}
+                                <a href="/see/{{materia}}-{{filename}}" target="_blank" class="btn btn-sm btn-outline-primary mr-2">Abrir</a>
+                                {{/if}} {{#if link}}
+                                <a href="{{link}}" target="_blank" class="btn btn-sm btn-outline-primary mr-2">Abrir</a>
+                                {{/if}} {{#if liked}}
+                                <button type="submit" class="btn btn-sm btn-outline-dark" disabled>
+                                    <img src="/img/like-disabled.png" style="width: 20px" alt="like">
+                                    <span class="ml-2">{{likes}}</span>
 
-<div class="album py-5 bg-light">
-    <div class="container">
-        <div class="row">
-            {{#each materiais}}
-            <div class="col-md-4">
-                <!-- for each loop in handlebars -->
-                <div class="card" style="width: 18rem;">
-                    {{#if link}}
-                    <iframe class="embed-responsive-item" src="{{link}}" allowfullscreen></iframe>
-                    {{/if}}
-                    
-                    <div class="card-body">
-                        <h5 class="card-title">{{name}}</h5>
-                        <p class="card-text">{{desc}}</p>
-                        {{#if filename}}
-                        <a href="/see/{{materia}}-{{filename}}" target="_blank" class="btn btn-primary btn-block mb-2">Abrir</a>
-                        {{/if}} {{#if link}}
-                        <a href="{{link}}" target="_blank" class="btn btn-primary btn-block mb-2">Ir</a>
-                        {{/if}} {{#if liked}}
-                        <button type="submit" class="btn btn-dark btn-block" disabled>Like {{likes}}</button>
-                        {{else}}
-                        <form action="/materiais/{{id}}?_method=PUT" method="post">
-                            <input type="hidden" name="_method" value="PUT">
-                            <button type="submit" class="btn btn-primary btn-block">Like {{likes}}</button>
-                        </form>
-                        {{/if}}
+                                </button>
+                                {{else}}
+                                <form action="/materiais/{{id}}?_method=PUT" method="post">
+                                    <input type="hidden" name="_method" value="PUT">
+                                    <button type="submit" class="btn btn-sm btn-outline-primary">
+                                        <img src="/img/like.png" style="width: 20px" alt="like">
+                                        <span class="ml-2">{{likes}}</span>
 
+                                    </button>
+                                </form>
+                                {{/if}}
+                            </div>
+                        </div>
                     </div>
                 </div>
+                {{/each}} {{else}}
+                <h4>Nenhum material encontrado</h4>
+                {{/if}}
             </div>
-            {{else}} {{/each}}
         </div>
     </div>
-</div>
+</section>

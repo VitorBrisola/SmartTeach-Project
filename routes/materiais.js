@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const Types = require('mongoose').Types;
 
 /* Curly braces to only import some functions */
 const { ensureAuthenticated } = require('../helpers/auth');
@@ -52,6 +53,10 @@ router.post('/', ensureAuthenticated, upload.single('file'), (req, res) => {
 			errors.push({ text: 'Indique um link para o material' });
 		}
 	}
+	if (req.file && req.file.contentType != 'application/pdf') {
+		errors.push({ text: 'Tipo de arquivo não suportado, somente PDF' })
+	}
+
 
 	/* If any errors respond with errors to user */
 	if (errors.length > 0) {
@@ -100,13 +105,13 @@ router.put('/:id', ensureAuthenticated, (req, res) => {
 		.then(material => {
 			material.likers.push(req.user.id);
 			User.findOne({ _id: req.user.id }).then(user => {
-				user.liked.push(material._id);
+				user.liked.push(Types.ObjectId(material._id));
+				user.save();
 			});
-			material.save()
-				.then(idea => {
-					req.flash('success_msg', 'Curtiu ' + material.name);
-					res.redirect('/materias/' + material.materia);
-				})
+			material.save();
+			req.flash('success_msg', 'Curtiu ' + material.name);
+			res.redirect('/materias/' + material.materia);
+
 		});
 });
 

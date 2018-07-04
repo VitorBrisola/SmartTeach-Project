@@ -1,18 +1,17 @@
 <section class="jumbotron text-center">
     <div class="container" style="margin-bottom: 8em;">
-        <h1 class="jumbotron-heading">Meus Materiais.</h1>
+        <h1 class="jumbotron-heading">Liked.</h1>
     </div>
-
     <div class="album py-5">
         <div class="container">
             <div class="row ml-3">
-                {{#each materiais}}
+                {{#if materiais}} {{#each materiais}}
                 <div class="col-md-4">
                     <!-- for each loop in handlebars -->
                     <div class="card" style="width: 18rem; margin-bottom: 3em;">
                         <div class="card-body">
                             {{#if link}}
-                            <img src="/img/link.png" class="thumb" alt="link"> {{else}}
+                            <img src="/img/link.png" class="card-img-top thumb" alt="link"> {{else}}
                             <img src="/img/pdf.png" class="thumb" alt="pdf"> {{/if}}
                             <br>
                             <hr>
@@ -28,15 +27,13 @@
                                 {{else}}
                                 <a href="{{link}}" target="_blank" class="btn btn-sm btn-outline-primary mr-2">Abrir</a>
                                 {{/if}}
-                                <form method="post" action="/materiais/{{id}}?_method=DELETE">
-                                    <input type="hidden" name="_method" value="DELETE">
-                                    <button type="submit" class="btn btn-sm btn-outline-danger" value="Deletar">Deletar</button>
-                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
-                {{else}} {{/each}}
+                {{/each}} {{else}}
+                <h4>Não curtiu nenhum material ainda</h4>
+                {{/if}}
             </div>
         </div>
     </div>
