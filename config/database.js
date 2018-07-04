@@ -1,7 +1,7 @@
 if(process.env.NODE_ENV === 'production'){
-    module.exports = 'mongodb://leoMurtha:041097ll@ds147890.mlab.com:47890/videas';
+    module.exports = 'mongodb://admin:admin$1@ds127811.mlab.com:27811/smartteach';
 }else{
-	module.exports = 'mongodb://127.0.0.1:27017/smartteach-dev';
+	module.exports = 'mongodb://mongo:27017/smartteach-dev';
 }
 
 /* DOCKER URI mongodb://mongo:27017/smartteach-dev 
