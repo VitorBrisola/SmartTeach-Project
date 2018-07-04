@@ -54,6 +54,10 @@ body {
   max-width: 60rem;
 }
 
+.jumbotron.text-center {
+  background-color: #dddddd33
+}
+
 footer {
   padding-top: 3rem;
   padding-bottom: 3rem;
@@ -81,4 +85,5 @@ footer p {
 
 .img-thumbnail:hover {
   border-color: #eaca03;
+  border-width: 2px;
 }
