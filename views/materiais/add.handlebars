@@ -1,0 +1,61 @@
+<div class="card card-body">
+    <h3>Adicionar Material</h3>
+    <form action="/materiais" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="name">Nome</label>
+            <input type="text" name="name" class="form-control" placeholder="Nome" value="{{name}}" required>
+        </div>
+        <div class="form-group">
+            <label for="desc">Descrição</label>
+            <textarea name="desc" class="form-control" placeholder="Descrição" required>{{desc}}</textarea>
+        </div>
+        <div class="class form-group ">
+            <label for="materia">Matéria</label>
+            <select name="materia" class="form-control" required>
+                <option value="" selected disabled hidden>Escolher a Matéria</option>
+                {{#each materias}}
+                <!-- for each loop in handlebars -->
+                <option value="{{name}}">{{name}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <div class="class form-group">
+            <label for="tipo">Tipo do Material</label>
+            <select id="tipos" name="tipo" class="form-control" onchange="contextChange()" required>
+                <option value="" selected disabled hidden>Escolher o Tipo do Material</option>
+                <option value="arquivo">Arquivo</option>
+                <option value="link">Link</option>
+            </select>
+        </div>
+        <div id="link" class="showing form-group">
+            <label for="link">Link</label>
+            <input type="link" name="link" class="form-control" placeholder="Link" value="{{link}}">
+        </div>
+        <div id="file-input" class="showing form-group custom-file mb-3">
+            <input id="file" type="file" name="file" id="file" class="custom-file-input">
+            <label for="file" class="custom-file-label form-control" ></label>
+        </div>
+        <button value="submit" type="submit" class="btn btn-primary">Adicionar</button>
+    </form>
+</div>
+
+
+<script>
+    function contextChange() {
+        const tipo = document.getElementById("tipos").value;
+        const filein = document.getElementById("file-input")
+        const link = document.getElementById("link");
+
+        if (tipo == 'arquivo') {
+            filein.style.display = 'block';
+            link.style.display = 'none';
+        } else if (tipo == 'link') {
+            filein.style.display = 'none';
+            link.style.display = 'block';
+        } else {
+            filein.style.display = 'none';
+            link.style.display = 'none';
+        }
+
+    }
+</script>
