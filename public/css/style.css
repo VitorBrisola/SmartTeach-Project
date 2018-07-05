@@ -7,7 +7,7 @@ body {
 
 @media screen and (max-width:768px) {
   img {
-      width:100%;
+      width:80%;
   }
   .container {
       max-width:100%;
@@ -31,13 +31,13 @@ body {
 }
 
 .navIcon{
-  width: 80%;
+  width: 100%;
   margin: auto;
   margin-right: 1em;
 }
 
 .thumb{
-  width: 150px;
+  width: 80%;
   margin-bottom: 3em;
 }
 
