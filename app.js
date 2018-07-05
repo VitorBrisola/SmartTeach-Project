@@ -19,7 +19,10 @@ mongoose.Promise = global.Promise;
    To work using local host use mongodb://localhost:27017/smartteach-dev
 */
 const mongoURI = require('./config/database');
-const conn = mongoose.createConnection(mongoURI);
+console.log(mongoURI);
+const conn = mongoose.createConnection(mongoURI).catch((err) => {
+	console.log(err);
+});
 
 let gfs;
 
