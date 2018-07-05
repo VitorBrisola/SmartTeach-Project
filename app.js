@@ -20,9 +20,7 @@ mongoose.Promise = global.Promise;
 */
 const mongoURI = require('./config/database');
 console.log(mongoURI);
-const conn = mongoose.createConnection(mongoURI).catch((err) => {
-	console.log(err);
-});
+const conn = mongoose.createConnection(mongoURI);
 
 let gfs;
 
